@@ -16,7 +16,7 @@ import { ToasterModule, ToasterService, ToasterConfig } from 'angular2-toaster';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ToasterModule.forRoot(),
+    ToasterModule,
     Routing,
     LoginModule,
     CategoryModule,
