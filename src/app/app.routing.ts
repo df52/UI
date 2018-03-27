@@ -9,7 +9,7 @@ const appRoutes: Routes = [
     },
     {
         path: '**',
-        redirectTo: '/public/login'
+        redirectTo: ''
     }
 ]
 
