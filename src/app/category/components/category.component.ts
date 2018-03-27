@@ -5,10 +5,13 @@ import { CategoryModalComponent } from './category-modal.component';
 import { CategoryService } from '../services/category.service';
 import { ScrollEvent } from 'ngx-scroll-event';
 
+
+
 @Component({
     selector: 'category',
     templateUrl: '../templates/category.component.html',
-    styleUrls: ['../css/category.component.css', '../css/category-list.component.css', '../css/loader.component.css']
+    styleUrls: ['../css/category.component.css', '../css/category-list.component.css',
+        '../css/loader.component.css', '../css/search.compoent.css']
 
 })
 export class CategoryComponent implements OnInit {
@@ -18,9 +21,11 @@ export class CategoryComponent implements OnInit {
     userIconClass = "dropdown";
     AllCategory: any = [];
     showloader: boolean = false;
+    mySearch: string = "";
     from: number = 0;
-    to: number = 10;
-    increment: number = 10;
+    to: number = 20;
+    increment: number = 20;
+    searchLimit: number = 20;
 
     @ViewChild(CategoryModalComponent) catModal: CategoryModalComponent;
 
@@ -32,31 +37,20 @@ export class CategoryComponent implements OnInit {
         this.reset();
         this.showloader = true;
         this.AllCategory = [];
-        // this.categoryService.getCategoriesByAccountId()
-        //     .subscribe(
-        //     (response) => {
-        //         this.AllCategory = JSON.parse(response._body);
-        //         console.log(this.AllCategory);
-        //         this.showloader = false;
-        //     },
-        //     (err) => {
-        //         console.error(err);
-        //     },
-        //     () => {
-        //     }
-        //     );
-
 
         this.showloader = true;
         var config: any = {};
         config.from = this.from;
         config.to = this.to;
-        this.categoryService.getCategoriesInrange(config)
+        this.categoryService.getTopCategories(12)
             .subscribe(
             (response) => {
                 var array = JSON.parse(response._body).body;
+                if (array.legth > 0) {
+                    this.from = array[array.length - 1].id;
+                    this.to = this.from + this.increment;
+                }
                 this.AllCategory = this.AllCategory.concat(array);
-                console.log(this.AllCategory);
                 this.showloader = false;
             },
             (err) => {
@@ -65,30 +59,6 @@ export class CategoryComponent implements OnInit {
             () => {
             }
             );
-
-
-        // this.showloader = true;
-        // var config: any = {};
-        // config.from = this.from;
-        // config.to = this.to;
-        // this.categoryService.getTopCategories(12)
-        //     .subscribe(
-        //     (response) => {
-        //         var array = JSON.parse(response._body).body;
-        //         if (array.legth > 0) {
-        //             this.from = array[array.length - 1].id;
-        //             this.to = this.from + this.increment;
-        //         }
-        //         this.AllCategory = this.AllCategory.concat(array);
-        //         console.log(this.AllCategory);
-        //         this.showloader = false;
-        //     },
-        //     (err) => {
-        //         console.error(err);
-        //     },
-        //     () => {
-        //     }
-        //     );
     }
 
     reset() {
@@ -105,8 +75,6 @@ export class CategoryComponent implements OnInit {
             .subscribe(
             (response) => {
                 category.SubCategories = JSON.parse(response._body);
-                console.log('list of subcategories');
-                console.log(category.SubCategories);
             },
             (err) => {
                 console.error(err);
@@ -161,6 +129,7 @@ export class CategoryComponent implements OnInit {
         this.categoryService.deleteCategory(category)
             .subscribe(
             (response) => {
+                this.toaster.clear();
                 this.toaster.pop('success', category.name + ' deleted successfully');
                 this.ngOnInit();
             },
@@ -185,6 +154,7 @@ export class CategoryComponent implements OnInit {
         this.categoryService.deleteSubCategory(category)
             .subscribe(
             (response) => {
+                this.toaster.clear();
                 this.toaster.pop('success', category.name + ' deleted successfully');
                 this.ngOnInit();
             },
@@ -204,27 +174,29 @@ export class CategoryComponent implements OnInit {
         //console.log('scroll occurred', event.originalEvent);
         if (event.isReachingBottom) {
             // console.log(`the user is reaching the bottom`);
-            this.showloader = true;
-            var config: any = {};
-            this.from = this.from + this.increment;
-            this.to = this.to + this.increment;
-            config.from = this.from;
-            config.to = this.to;
-            this.categoryService.getCategoriesInrange(config)
-                .subscribe(
-                (response) => {
-                    var array = JSON.parse(response._body).body;
-                    this.AllCategory = this.AllCategory.concat(array);
-                    console.log(this.AllCategory);
-                    this.showloader = false;
-                },
-                (err) => {
-                    console.error(err);
-                },
-                () => {
-                }
-                );
+            if (this.mySearch.length > 0) {
 
+            } else {
+                this.showloader = true;
+                var config: any = {};
+                this.from = this.from + this.increment;
+                this.to = this.to + this.increment;
+                config.from = this.from;
+                config.to = this.to;
+                this.categoryService.getCategoriesInrange(config)
+                    .subscribe(
+                    (response) => {
+                        var array = JSON.parse(response._body).body;
+                        this.AllCategory = this.AllCategory.concat(array);
+                        this.showloader = false;
+                    },
+                    (err) => {
+                        console.error(err);
+                    },
+                    () => {
+                    }
+                    );
+            }
         }
         if (event.isReachingTop) {
             //console.log(`the user is reaching the bottom`);
@@ -233,5 +205,53 @@ export class CategoryComponent implements OnInit {
             //console.log(`This event is fired on Window not on an element.`);
         }
 
+    }
+
+    onTypeHeadSearch() {
+        if (this.mySearch.length == 0) {
+            this.ngOnInit();
+        } else {
+            let config: any = {};
+            config.pattern = this.mySearch;
+            config.limit = this.increment;
+            this.categoryService.getTypeHeadSearch(config)
+                .subscribe(
+                (response) => {
+                    var array = JSON.parse(response._body).body;
+                    this.AllCategory = array;
+                    this.showloader = false;
+                },
+                (err) => {
+                    console.error(err);
+                },
+                () => {
+                }
+                );
+        }
+    }
+
+
+    onTypeHeadSearchScroll() {
+        if (this.mySearch.length == 0) {
+            this.ngOnInit();
+        } else {
+            let config: any = {};
+            config.pattern = this.mySearch;
+            this.searchLimit += this.searchLimit;
+            config.limit = this.searchLimit;
+            this.categoryService.getTypeHeadSearch(config)
+                .subscribe(
+                (response) => {
+                    var array = JSON.parse(response._body).body;
+                    this.AllCategory = array;
+                    this.showloader = false;
+                },
+                (err) => {
+                    console.error(err);
+                },
+                () => {
+                }
+                );
+        }
     }
 }

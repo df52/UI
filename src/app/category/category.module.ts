@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { HttpModule, JsonpModule, BrowserXhr } from '@angular/http';
 import { BsModalModule } from 'ng2-bs3-modal';
 import { ScrollEventModule } from 'ngx-scroll-event';
-
 import { CategoryComponent } from './components/category.component';
 import { CategoryModalComponent } from './components/category-modal.component'
 import { CategoryService } from './services/category.service';

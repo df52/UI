@@ -6,16 +6,15 @@ import { HttpModule, JsonpModule, BrowserXhr } from '@angular/http';
 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
 
 import { LoginComponent } from './components/login.component';
-import { RegisterUserComponent } from './components/register.component';
 import {LoginService} from './services/login.service';
 
 import { LoginRouting } from './login.routing';
 
 @NgModule({
     imports: [CommonModule, FormsModule, RouterModule, HttpModule, JsonpModule, LoginRouting,SlimLoadingBarModule],
-    declarations: [LoginComponent, RegisterUserComponent],
+    declarations: [LoginComponent],
     providers: [LoginService],
-    exports: [LoginComponent, RegisterUserComponent]
+    exports: [LoginComponent]
 })
 export class LoginModule { }
 

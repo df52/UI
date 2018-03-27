@@ -98,8 +98,8 @@ export class CategoryModalComponent {
             .subscribe(
             (response) => {
                 this.onAdd.emit(true);
+                this.toaster.clear();
                 this.toaster.pop('success', 'Category added successfully. Add more categories or close the modal.');
-                console.log(response);
             },
             (err) => {
                 console.error(err);
@@ -116,8 +116,8 @@ export class CategoryModalComponent {
             .subscribe(
             (response) => {
                 this.onAdd.emit(true);
+                this.toaster.clear();
                 this.toaster.pop('success', 'Sub-Category added successfully. Add more sub categories or close the modal.');
-                console.log(response);
             },
             (err) => {
                 console.error(err);
@@ -141,6 +141,7 @@ export class CategoryModalComponent {
             (response) => {
                 this.onAdd.emit(true);
                 this.editCatModal.close();
+                this.toaster.clear();
                 this.toaster.pop('success', 'Category edited successfully');
             },
             (err) => {
@@ -169,6 +170,7 @@ export class CategoryModalComponent {
             (response) => {
                 this.onAdd.emit(true);
                 this.editSubCatModal.close();
+                this.toaster.clear();
                 this.toaster.pop('success', 'Sub-Category edited successfully');
             },
             (err) => {

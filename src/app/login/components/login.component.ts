@@ -33,7 +33,6 @@ export class LoginComponent {
         this.loginService.login(this.model)
             .subscribe(
             (response) => {
-                console.log(response);
                 this.progressBar.stop();
                 this.storeData(response);
 
@@ -66,7 +65,6 @@ export class LoginComponent {
 
     checkAndRegisterUser() {
         if (this.model.Password != this.model.ConfirmPassword) {
-            console.log("Password doesnt match.");
             this.toasterService.pop('error', '"Password doesnt match.');
         } else {
             this.registerUser()
@@ -78,7 +76,6 @@ export class LoginComponent {
         this.loginService.register(this.model)
             .subscribe(
             (response) => {
-                console.log(response);
                 this.resetInfo();
             },
             (err) => {

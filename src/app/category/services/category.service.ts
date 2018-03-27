@@ -134,4 +134,15 @@ export class CategoryService {
         const _response$ = this.http.delete(Constant.apiEndpoint + '/Categories/' + _config.categoryId + '/sub-categories/' + _config.id, { headers: _headers });
         return _response$.map(res => res);
     }
+
+    getTypeHeadSearch(_config: any): Observable<any> {
+        var accoundId = JSON.parse(localStorage.getItem('user')).id;
+        var _headers = new Headers();
+
+        _headers.append('Content-Type', 'application/json');
+
+        const _response$ = this.http.get(Constant.searchTypeAhead + '?accountId=' + accoundId + '&pattern=' + _config.pattern + '&limit=' +
+            _config.limit, { headers: _headers });
+        return _response$.map(res => res);
+    }
 }
