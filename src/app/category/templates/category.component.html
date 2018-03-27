@@ -1,0 +1,127 @@
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span> 
+            </button>
+            <a target="_blank" href="#" class="navbar-brand">My sApp.</a>
+        </div> -->
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <h2 align='center'>Category Dashboard</h2>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li [ngClass]='userIconClass' (click)='userDropdown()'>
+                    <a class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span> 
+                        <strong>{{user.username}}</strong>
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <div class="navbar-login">
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <p class="text-center">
+                                            <span class="glyphicon glyphicon-user icon-size"></span>
+                                        </p>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <p class="text-left"><strong>{{user.username}}</strong></p>
+                                        <p class="text-left small">{{user.email}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <div class="navbar-login navbar-login-session">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <p>
+                                            <a (click)='signOut()' class="btn btn-danger btn-block">Sign Out</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<p>
+    <span class="pull-right">
+    <a (click)='addCategory()' class="btn btn-success btn-md" >
+      <span class="glyphicon glyphicon-plus" ></span> Categories
+    </a>
+    </span>
+</p>
+
+
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="single category">
+            <h3 class="side-title">Categories</h3>
+
+            <ul class="list-unstyled">
+                <div detect-scroll (onScroll)="handleScroll($event)" [bottomOffset]="10"></div>
+                <li *ngFor='let category of AllCategory'>
+                    <div>
+                        <button (click)='expandCategory(category)' type="button" class="btn btn-default btn-md custom">
+                            <span class="glyphicon glyphicon-list"></span>  {{ category.name | uppercase}} 
+                           
+                    </button> Type : {{ category.type | lowercase}}
+                    </div>
+                    <span class="pull-right">
+                           <button type="button" class="btn btn-info btn-xs" (click)='addSubCategory(category)'><span class="glyphicon glyphicon-plus" ></span>Sub-category</button>
+                    <button type='button' (click)='editCategoy(category)' class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
+                    <button type='button' (click)='deleteCategory(category)' class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
+                    </span>
+
+                    <div *ngIf='category.expand'>
+                        <ul>
+
+                            <div> Description : {{ category.description}} </div>
+                            <ul>
+                                <ul class="list-unstyled">
+                                    <li *ngFor='let subCategory of category.SubCategories'>
+                                        <div>
+                                            <button type="button" class="btn btn-default btn-sm custom" (click)='expandSubCategory(subCategory)'> 
+                                        {{subCategory.name | uppercase}} </button>                                            Type : {{ subCategory.type | lowercase}} </div>
+                                        <span class="pull-right">
+                                         <button type='button' (click)='editSubCategory(subCategory)' class="btn btn-default btn-xs"><span class="glyphicon glyphicon-pencil"></span></button>
+                                        <button type='button' (click)='deleteSubCategory(subCategory)' class="btn btn-default btn-xs"><span class="glyphicon glyphicon-trash"></span></button>
+                                        </span>
+                                        <div *ngIf='subCategory.expand'>
+                                            <ul>
+
+                                                <div> Description : {{subCategory.description}} </div>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </ul>
+                        </ul>
+
+                    </div>
+                    <br><br>
+                </li>
+
+                <div class="dialog-background" *ngIf='showloader'>
+                    <div class="dialog-loading-wrapper">
+                            <i class="fa fa-spinner" style="font-size:48px;color:red"></i>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+</div>
+<category-modal (onAdd)='childEvent($event)'></category-modal>
