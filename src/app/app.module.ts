@@ -16,7 +16,7 @@ import { ToasterModule, ToasterService, ToasterConfig } from 'angular2-toaster';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    ToasterModule,
+    ToasterModule.forRoot(),
     Routing,
     LoginModule,
     CategoryModule,
@@ -28,12 +28,12 @@ import { ToasterModule, ToasterService, ToasterConfig } from 'angular2-toaster';
 export class AppModule {
   constructor(private toasterService: ToasterService) {
     this.toasterService = toasterService;
-};
+  };
 
-public toasterconfig: ToasterConfig =
-new ToasterConfig({
+  public toasterconfig: ToasterConfig =
+  new ToasterConfig({
     showCloseButton: true,
     tapToDismiss: false,
     positionClass: 'toast-top-right'
-});
+  });
 }
