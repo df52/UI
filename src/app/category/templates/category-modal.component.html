@@ -15,12 +15,12 @@
         <br> <br>
 
         <div>
+            <input type='text' [(ngModel)]='model.CategoryType' placeholder="Category Type" class="txt">
+        </div>
+        <div>
             <input type='text' [(ngModel)]='model.CategoryDescription' placeholder="Category Description (Optional)" class="txt">
         </div>
 
-        <div>
-            <input type='text' [(ngModel)]='model.CategoryType' placeholder="Category Type" class="txt">
-        </div>
     </bs-modal-body>
     <bs-modal-footer>
         <button type="button" class="btn btn-default" (click)='dismiss()'>Close</button>
@@ -43,27 +43,26 @@
                         <option>Automobiles </option>
                       </select>
         <br> <br>
-
+        <div>
+            <input type='text' [attr.disabled]="true" [(ngModel)]='model.CategoryType' placeholder="Category Type" class="txt">
+        </div>
         <div>
             <input type='text' [attr.disabled]='true' [(ngModel)]='model.CategoryDescription' placeholder="Category Description" class="txt">
         </div>
 
-        <div>
-            <input type='text' [attr.disabled]="true" [(ngModel)]='model.CategoryType' placeholder="Category Type" class="txt">
-        </div>
         <br> Select Sub-Category :
 
         <select [(ngModel)]='model.Subcategory' class="selectpicker" class="txt">
                     <option *ngFor='let cat of subCategoryOptions'>{{cat}}</option>
                   </select>
         <br> <br>
-
-        <div>
-            <input type='text' [(ngModel)]='model.SubCategoryDescription' placeholder="Sub-Category Description (Optional)" class="txt">
-        </div>
         <div>
             <input type='text' [(ngModel)]='model.SubCategoryType' placeholder="Sub-Category Type (Optional)" class="txt">
         </div>
+        <div>
+            <input type='text' [(ngModel)]='model.SubCategoryDescription' placeholder="Sub-Category Description (Optional)" class="txt">
+        </div>
+
     </bs-modal-body>
     <bs-modal-footer>
         <button type="button" class="btn btn-default" (click)='dismiss()'>Close</button>
@@ -89,12 +88,12 @@
         <br> <br>
 
         <div>
+            <input type='text' [(ngModel)]='model.CategoryType' placeholder="Category Type" class="txt">
+        </div>
+        <div>
             <input type='text' [(ngModel)]='model.CategoryDescription' placeholder="Category Description (Optional)" class="txt">
         </div>
 
-        <div>
-            <input type='text' [(ngModel)]='model.CategoryType' placeholder="Category Type" class="txt">
-        </div>
     </bs-modal-body>
     <bs-modal-footer>
         <button type="button" class="btn btn-default" (click)='dismiss()'>Close</button>
@@ -114,13 +113,13 @@
                         <option *ngFor='let cat of subCategoryOptions'>{{cat}}</option>
                       </select>
         <br> <br>
-
-        <div>
-            <input type='text' [(ngModel)]='model.SubCategoryDescription' placeholder="Sub-Category Description (Optional)" class="txt">
-        </div>
         <div>
             <input type='text' [(ngModel)]='model.SubCategoryType' placeholder="Sub-Category Type (Optional)" class="txt">
         </div>
+        <div>
+            <input type='text' [(ngModel)]='model.SubCategoryDescription' placeholder="Sub-Category Description (Optional)" class="txt">
+        </div>
+
     </bs-modal-body>
     <bs-modal-footer>
         <button type="button" class="btn btn-default" (click)='dismiss()'>Close</button>

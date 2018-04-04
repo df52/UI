@@ -9,8 +9,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 
 export class LoginService {
-
-    constructor(private http: Http) { }
+    constructor(private http: Http) {
+    }
 
     login(_config: any): Observable<any> {
         var _headers = new Headers();
@@ -42,11 +42,12 @@ export class LoginService {
     }
 
     getUserDetails(_userId): Observable<any> {
+        let token = localStorage.getItem('access_Token');
         var _headers = new Headers();
 
         _headers.append('Content-Type', 'application/json');
 
-        const _response$ = this.http.get(Constant.getUserById + '/' + _userId, { headers: _headers });
+        const _response$ = this.http.get(Constant.getUserById + '/' + _userId + '?access_token=' + token, { headers: _headers });
         return _response$.map(res => res);
     }
 }

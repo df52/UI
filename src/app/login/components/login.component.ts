@@ -44,18 +44,20 @@ export class LoginComponent {
                         this.user = response._body;
                         localStorage.setItem('user', this.user);
                         this.router.navigate(['./app/dashboard']);
+                        this.toasterService.pop('success', 'Logged in successfully');
                     },
                     (err) => {
                         console.error(err);
+                        this.toasterService.pop('error', 'Logged in failed');
                     },
                     () => {
                     }
                     );
-                this.toasterService.pop('success', 'Logged in successfully');
+
             },
             (err) => {
                 console.error(err);
-
+                this.toasterService.pop('error', 'Logged in failed');
             },
             () => {
             }

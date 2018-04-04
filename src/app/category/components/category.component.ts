@@ -86,9 +86,23 @@ export class CategoryComponent implements OnInit {
     }
 
     signOut() {
-        localStorage.clear();
-        this.toaster.pop('success', 'Logged out successfully.');
-        this.router.navigate(['./public/login']);
+
+        this.categoryService.signOut()
+            .subscribe(
+            (response) => {
+                localStorage.clear();
+                this.toaster.clear();
+                this.toaster.pop('success', ' Signed out successfully');
+                this.router.navigate(['./public/login']);
+            },
+            (err) => {
+                console.error(err);
+                this.toaster.pop('error', ' Signed out failed');
+            },
+            () => {
+            }
+            );
+
     }
 
     userDropdown() {
