@@ -1,6 +1,6 @@
 
 export class Constant {
-    public static apiEndpoint = 'http://localhost:3000/api';
+    public static apiEndpoint = 'https://hidden-reaches-10384.herokuapp.com/api';
     public static loginUrl = Constant.apiEndpoint + '/Accounts/login';
     public static signOut = Constant.apiEndpoint + '/Accounts/logout';
     public static registerUrl = Constant.apiEndpoint + '/Accounts';
