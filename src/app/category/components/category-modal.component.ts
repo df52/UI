@@ -94,6 +94,7 @@ export class CategoryModalComponent {
     }
 
     addCategory() {
+        
         this.categoryService.addCategory(this.model)
             .subscribe(
             (response) => {

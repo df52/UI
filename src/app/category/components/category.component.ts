@@ -86,14 +86,13 @@ export class CategoryComponent implements OnInit {
     }
 
     signOut() {
-
+        localStorage.clear();
+        this.router.navigate(['./public/login']);
         this.categoryService.signOut()
             .subscribe(
             (response) => {
-                localStorage.clear();
                 this.toaster.clear();
                 this.toaster.pop('success', ' Signed out successfully');
-                this.router.navigate(['./public/login']);
             },
             (err) => {
                 console.error(err);
@@ -244,6 +243,11 @@ export class CategoryComponent implements OnInit {
         }
     }
 
+    onSearchKey(event) {
+        if (event.key === "Enter") {
+            this.onTypeHeadSearch();
+        }
+    }
 
     onTypeHeadSearchScroll() {
         if (this.mySearch.length == 0) {
