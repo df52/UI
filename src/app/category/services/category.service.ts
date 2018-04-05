@@ -158,8 +158,7 @@ export class CategoryService {
         return _response$.map(res => res);
     }
 
-    signOut(): Observable<any> {
-        let token = localStorage.getItem('access_Token');
+    signOut(token): Observable<any> {
         var _headers = new Headers();
 
         _headers.append('Content-Type', 'application/json');

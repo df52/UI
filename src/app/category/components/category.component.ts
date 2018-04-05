@@ -86,9 +86,10 @@ export class CategoryComponent implements OnInit {
     }
 
     signOut() {
+        let token = localStorage.getItem('access_Token');
         localStorage.clear();
         this.router.navigate(['./public/login']);
-        this.categoryService.signOut()
+        this.categoryService.signOut(token)
             .subscribe(
             (response) => {
                 this.toaster.clear();
